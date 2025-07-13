@@ -11,12 +11,12 @@
       <div v-if='showPerCategory' class='PERCATEGORY'>
     <div class="INPUTCONTAINER">
     <input type="text"
-      id="todo"
+      id="title[]"
       placeholder="TITLE"
       class="header-input"></input>
-
-<div class="item-list">
-    <div
+      
+      <div class="item-list">
+        <div
       v-for="(item, index) in items"
       :key="index"
       class="item-row">
@@ -24,16 +24,24 @@
       <input
         v-model="items[index]"
         @keydown.enter="handleEnter(index)"
-        class="item-input"
-       
-      />
-      
+        class="item-input"/>
+            </div>
+          </div>
+        </div>
+        <button @click="saveCategory" class="save-button">Save Category</button>
+      </div>
+
+      <div class='showCategory' v-if="taskList.length > 0">
+        <div v-for="(task, index) in taskList" :key="index" class="category-preview">
+          <h3>{{ task.title }}</h3>
+          <ul>
+            <li v-for="(item, itemIndex) in task.items" :key="itemIndex">
+              {{ item }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
-  </div>
-       </div>
-      </div>
-      </div>
- 
   </main>
 </template>
 
@@ -41,37 +49,59 @@
 
 
 <script setup lang="ts">
-import {ref, nextTick} from 'vue'
+import {ref} from 'vue'
 import count from '../components/category-button.vue'
 import addIcon from '../components/icons/add-icon.vue'
+import editIcon from '../components/icons/edit-icon.vue'
+import saveIcon from '../components/icons/save-icon.vue'
+import deleteIcon from '../components/icons/delete-icon.vue'
 
 //for the detailed category box
-const showPerCategory=ref(false)
+const showPerCategory=ref(false);
+const currentTitle = ref('')
+const items = ref([''])
+const taskList = ref<Task[]>([])
+
 const toggleCategory=()=>{
     showPerCategory.value=!showPerCategory.value
 }
+type Task = {
+  title: string;
+  items: string[];
+}
 
-//for the items
-const items = ref<string[]>(['']) // Initial list
-const taskInputs = ref<HTMLInputElement[]>([])
 
-
-
-// Handle Enter key press
+// Handle enter key press
 const handleEnter = (index: number) => {
-  const trimmed = items.value[index].trim()
+  items.value.push('')
+}
 
-  if (trimmed === '') {
-    // Remove empty item at any index (except last empty one)
-    if (index !== items.value.length - 1) {
-      items.value.splice(index, 1)
+// Save category
+const saveCategory = () => {
+  if (currentTitle.value.trim()) {
+    const newTask: Task = {
+      title: currentTitle.value,
+      items: items.value.filter(item => item.trim())
     }
-  } else if (index === items.value.length - 1) {
-    // Add a new input only at the end
-    items.value.push('')
+    taskList.value.push(newTask)
+    currentTitle.value = ''
+    items.value = ['']
+    localStorage.setItem('taskList', JSON.stringify(taskList.value))
+    showPerCategory.value = false
   }
 }
 
+// Load saved tasks on mount
+const loadSavedTasks = () => {
+  const savedTasks = localStorage.getItem('taskList')
+  if (savedTasks) {
+    taskList.value = JSON.parse(savedTasks)
+  }
+}
+
+// Load saved tasks when component mounts
+loadSavedTasks()
+</script>
 </script>
 
 <style>
@@ -118,6 +148,20 @@ const handleEnter = (index: number) => {
   box-sizing: border-box;
   
 }
+
+.showCategory{
+    flex: 1;
+  position: relative;
+  border: 3px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: #483c32;
+  box-shadow: 10px 10px 5px #645452;
+  color: white;
+  box-sizing: border-box;
+  
+}
+
 .ADDBUTTON{
   position: absolute;
   bottom: 1px; /* 🔻 Space from the bottom */
