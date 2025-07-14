@@ -42,7 +42,7 @@ export const useTaskStore = defineStore('tasks', () => {
   const addTask = (categoryData: { title: string; items: string[] }) => {
     if (!categoryData.title.trim()) return;
 
-    const newTask: Task = {
+    const newTask: Task = { 
       id: Date.now(),
       title: categoryData.title,
       // Convert the array of strings to an array of TaskItem objects
