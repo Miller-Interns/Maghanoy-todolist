@@ -4,7 +4,8 @@
     <!-- <hi> Maryne R. Maghanoy</hi>
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" /> -->
       <nav class="nav">
-        <RouterLink to="/TODOLIST">to do</RouterLink>
+        <RouterLink to="/TODOLISTS">Go to App</RouterLink>
+        <RouterLink to="/TRAINEE">Trainee's info</RouterLink>
       </nav>
 
   <RouterView />

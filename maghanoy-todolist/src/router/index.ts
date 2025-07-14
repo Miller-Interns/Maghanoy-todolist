@@ -1,15 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import TodoList from '../views/todo-list.vue'
+import TodoList from '../views/todo-lists.vue'
+import TRAINEE from '../views/trainee-info.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/TODOLIST',
-      name: 'TODOLIST',
+      path: '/TODOLISTS',
+      name: 'TODOLISTS',
       component: TodoList,
     },
+
+    {
+      path: '/TRAINEE',
+      name: 'TRAINEE',
+      component: TRAINEE,
+    }
   //   {
   //     path: '/about',
   //     name: 'about',
