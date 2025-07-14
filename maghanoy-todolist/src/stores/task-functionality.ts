@@ -1,6 +1,6 @@
 import { ref, computed, watch, onMounted} from 'vue'
 import { defineStore } from 'pinia'
-import {type Task, type TaskItem} from '@/types/todo-types'
+import {type Task} from '@/types/todo-types'
 
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)

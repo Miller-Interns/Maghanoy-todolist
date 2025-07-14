@@ -5,7 +5,7 @@
         <h5>MARYNE R. MAGHANOY</h5>
       </div>
       <div class='DATE'>
-        <h4>July 10, 2025</h4>
+        <h4>Date Started: July 10, 2025</h4>
       </div>
       <!-- Use a button with a click handler -->
       <button @click="goToApp" class="go-to-app-button">Go to App</button>
